@@ -1,6 +1,15 @@
 describe('when a user visits our shorten URL website', () => {
   beforeEach(() => {
     cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {fixture: "urlObject"})
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 201,
+      body: {
+        id:2,
+        long_url: "http://This.is.my.mod3.final/dffdsfds/dfsdfsd/ewrwere",
+        short_url: "http://localhost:3001/useshorturl/2",
+        title: "This is Sweet!"
+      }
+    }) 
     cy.visit('http://localhost:3000/')
   })
 
@@ -29,15 +38,19 @@ describe('when a user visits our shorten URL website', () => {
     cy.get("input").first().should("have.value", "This is Sweet!")
     cy.get("input").last().type("http://This.is.my.mod3.final/dffdsfds/dfsdfsd/ewrwere")
     cy.get('button').click() 
-    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {fixture: "urlPostObject"}) 
-    cy.get(".url").should("have.length", 2)
-    cy.get("h1").contains("URL Shortener")
-    cy.get('h3.title').contains('This is Sweet!').should("be.visible")
-    cy.get(':nth-child(2) > .short-url').should("be.visible")
-    cy.get(':nth-child(2) > .long-url').should("be.visible")
+    cy.intercept("http://localhost:3001/api/v1/urls", { fixture: "urlPostObject.json" })
+    cy.intercept("POST", "http://localhost:3001/api/v1/urls", {
+          statusCode: 201,
+          body: {
+            id:2,
+            long_url: "http://This.is.my.mod3.final/dffdsfds/dfsdfsd/ewrwere",
+            short_url: "http://localhost:3001/useshorturl/2",
+            title: "This is Sweet!"
+          }
   });
 })
 
 
 
 
+})
