@@ -18,14 +18,6 @@ class App extends Component {
     .catch(error => this.setState({ error: error }))  
   }
 
-  // submitURL = (urlData) => {
-  //   postURL(urlData)
-  //   .then(getUrls()
-  //   .then(updatedURLs => this.setState({urls: updatedURLs.urls}) )
-  //   .catch(error => console.error("Something went wrong posting", error))
-  //   )
-  // }
-
   addUrl = (newUrl) => {
     postUrls(newUrl)
     .then(data => this.setState({ urls: [...this.state.urls, data]}))

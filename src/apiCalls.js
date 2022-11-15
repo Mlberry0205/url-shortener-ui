@@ -37,8 +37,4 @@ const postUrls = async (newUrl) => {
   }
 };
 
-
-
-
-
 export { getUrls, postUrls }
